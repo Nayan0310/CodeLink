@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codelink | Your Gists</title>
+    <link rel="icon" href="/assets/logo.png">
+    <link rel="stylesheet" href="/styles/myCode.css">
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-clike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-java.min.js"></script>
+
+</head>
+<body>
+    <div class="goback"><h1>Your Gists</h1><a href="/public/main.html">Go Back</a></div>
+    <div id="my-code-list"></div>
+
+    <!-- Script to fetch and display the user's codes -->
+    <script>
+        async function fetchMyCodes() {
+            const response = await fetch('/api/my-codes');
+            const data = await response.json();
+            const codeContainer = document.getElementById('my-code-list');
+
+            if (!data.success) {
+                codeContainer.innerHTML = `<p class="no-gists">You don’t have any gists yet.<br>Your gists will show up here on your profile.</p>`;
+                return;
+            }
+
+            const myCodes = data.codes;
+
+            myCodes.forEach(code => {
+                const codeElement = document.createElement('div');
+                codeElement.classList.add('code-container');
+
+                // Detect language based on file extension
+                const fileExtension = code.filename.split('.').pop();
+                let languageClass = getLanguageClass(fileExtension);
+
+                // Escape the code content to prevent HTML from being rendered
+                const escapedContent = escapeHtml(code.content.split('\n').slice(0, 10).join('\n'));
+    
+                // Generate the HTML structure for each code
+                codeElement.innerHTML = `
+                    <p class="username">You</p>
+                    <p class="code-details">${code.filename} | ${code.description}</p>
+                    <a class="view-full-link" href="/fullcode.html?id=${code._id}">View Full Code</a>
+                    <pre><code class="language-${languageClass}">${escapedContent}</code></pre>
+                `;
+                codeContainer.appendChild(codeElement);
+            });
+    
+
+            // Manually highlight all code blocks with Prism
+            Prism.highlightAll();
+        }
+
+        // Function to detect language based on file extension
+        function getLanguageClass(fileExtension) {
+            const languages = {
+                'js': 'javascript',
+                'py': 'python',
+                'html': 'markup',
+                'css': 'css',
+                'java': 'java',
+                // Add more extensions and corresponding Prism language classes as needed
+            };
+            return languages[fileExtension] || 'plaintext'; // Default to plaintext if unknown
+        }
+
+        // Function to escape HTML characters
+        function escapeHtml(html) {
+            return html
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchMyCodes);
+    </script>
+    <script>
+        // Function to handle API requests and redirect on 401 Unauthorized
+        async function fetchProtectedData() {
+            try {
+                const response = await fetch('/api/protected-data'); // Example API request
+
+                if (response.status === 401) {
+                    // If the user is unauthorized, redirect to the login page
+                    window.location.href = '/Login.html';
+                }
+
+                const data = await response.json();
+                console.log('Protected data:', data);
+            } catch (error) {
+                console.error('Error fetching protected data:', error);
+                window.location.href = '/Login.html'; // Redirect in case of error
+            }
+        }
+
+        // Fetch protected data when the page loads (example)
+        document.addEventListener('DOMContentLoaded', fetchProtectedData);
+    </script>
+    
+</body>
+</html>

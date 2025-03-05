@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeLink | Sign Up</title>
+    <link rel="icon" href="/assets/logo.png">
+    <link rel="stylesheet" href="/styles/SignUp.css">
+</head>
+<body>
+    <div class="animation">Welcome to codelink. Fill the below form to get started..</div>
+    <div class="container">
+        <a href="/public/index.html"><img class="logo" src="/assets/logo.png" alt="logo"></a>
+        <h2>Register to CodeLink</h2>
+        <form id="sign-up-form" method="post">
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Email" required>
+            <label for="username">Username:</label>
+            <input type="text" id="username" placeholder="Username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="Create Password" required>
+            <button type="submit">Sign Up</button>
+            <p>Already Registered?<a href="/public/Login.html">LogIn</a></p>
+        </form>
+    </div>
+
+    <script src="/auth.js"></script> <!-- External JavaScript file for authentication logic -->
+</body>
+</html>

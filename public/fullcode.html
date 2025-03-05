@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeLink | Full Code</title>
+    <link rel="icon" href="/assets/logo.png">
+    <link rel="stylesheet" href="/styles/fullcode.css">
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-clike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"></script>
+    <!-- Add other languages as needed -->
+</head>
+<body>
+
+    <div class="container">
+        <h1>Full Code</h1>
+
+        <!-- Section to display the shareable URL -->
+        <div class="shareable-url">
+            <label for="shareable-url-input">Shareable URL:</label>
+            <input type="text" id="shareable-url-input" readonly>
+        </div>
+        <div id="full-code-container" class="code-container"></div>
+    </div>
+
+     <!-- Script to fetch and display the full code -->
+     <script>
+        // Function to extract the query parameter (code ID) from the URL
+        function getCodeIdFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id'); // Get the 'id' query parameter
+        }
+    
+        async function fetchFullCode() {
+            const codeId = getCodeIdFromURL();
+            if (!codeId) {
+                document.getElementById('full-code-container').innerText = 'No code ID provided.';
+                return;
+            }
+    
+            // Set the shareable URL
+            const shareableUrl = `${window.location.origin}/fullcode.html?id=${codeId}`;
+            document.getElementById('shareable-url-input').value = shareableUrl;
+    
+            // Fetch the full code using the code ID
+            const response = await fetch(`/api/full-code/${codeId}`);
+            const data = await response.json();
+            
+            if (data.content && data.filename) {
+                const fileExtension = data.filename.split('.').pop();
+                const languageClass = getLanguageClass(fileExtension);
+    
+                // Escape the code content to prevent HTML from being rendered
+                const escapedContent = escapeHtml(data.content);
+    
+                // Insert the escaped content into the HTML
+                document.getElementById('full-code-container').innerHTML = `
+                    <p class="username">${data.username}</p>
+                    <p class="code-details">${data.filename} | ${data.description}</p>
+                    <pre><code class="language-${languageClass}">${escapedContent}</code></pre>
+                `;
+    
+                // Highlight the full code with Prism.js
+                Prism.highlightAll();
+            } else {
+                document.getElementById('full-code-container').innerText = 'Error fetching code or code not found.';
+            }
+        }
+    
+        // Function to detect language based on file extension
+        function getLanguageClass(fileExtension) {
+            const languages = {
+                'js': 'javascript',
+                'py': 'python',
+                'html': 'markup',
+                'css': 'css',
+                'java': 'java',
+                // Add more extensions and corresponding Prism language classes as needed
+            };
+            return languages[fileExtension] || 'plaintext'; // Default to plaintext if unknown
+        }
+    
+        // Function to escape HTML characters to safely display HTML code
+        function escapeHtml(html) {
+            return html
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+    
+        // Fetch full code when the document is ready
+        document.addEventListener('DOMContentLoaded', fetchFullCode);
+    </script>
+    
+</body>
+</html>

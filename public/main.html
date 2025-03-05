@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodeLink | Post code</title>
+    <link rel="icon" href="/assets/logo.png" />
+    <link rel="stylesheet" href="/styles/main.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="logo">
+          <img src="/assets/logo.png" alt="Logo" />
+          <h1>CodeLink</h1>
+        </div>
+        <div class="nav-links">
+          <a href="/public/index.html">Home</a>
+          <a href="/public/myCode.html">Your Gists</a>
+          <div class="profile">
+            <a href="/public/profile.html"
+              ><img src="/assets/profile.jpg" alt="profile"
+            /></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="container">
+      <h1>Submit Your Code</h1>
+      <form action="/submit" method="POST">
+        <!-- Input for Filename -->
+        <label for="filename">Filename:</label>
+        <input
+          type="text"
+          id="filename"
+          name="filename"
+          placeholder="Enter the filename (e.g., app.js)"
+          required
+        />
+
+        <!-- Input for Short Description -->
+        <label for="description">Description:</label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          placeholder="Enter a short description of the code"
+          required
+        />
+
+        <!-- Textarea for Code -->
+        <label for="content">Code:</label>
+        <textarea
+          id="code-content"
+          name="content"
+          rows="10"
+          placeholder="Paste your code here..."
+          required
+        ></textarea>
+        <input
+          type="hidden"
+          id="submission-type"
+          name="submissionType"
+          value="public"
+        />
+
+        <!-- Two buttons to choose public or private submission -->
+        <button type="button" id="submit-public">Create a Public Gist</button>
+        <button type="button" id="submit-private">Create a Private Gist</button>
+      </form>
+    </section>
+    <footer>
+      <div class="footer">
+        <div class="copy">
+          <img src="/assets/logo.png" alt="Codelink" class="Codelink-icon" />
+        </div>
+        <div class="text">&copy; 2024 CodeLink.</div>
+        <a href="info.html"> About</a>
+        <a href="info.html"> Contact us</a>
+      </div>
+    </footer>
+    <script src="/auth.js"></script>
+    <script>
+        // Function to handle API requests and redirect on 401 Unauthorized
+        async function fetchProtectedData() {
+            try {
+                const response = await fetch('/api/protected-data'); // Example API request
+
+                if (response.status === 401) {
+                    // If the user is unauthorized, redirect to the login page
+                    window.location.href = '/Login.html';
+                }
+
+                const data = await response.json();
+                console.log('Protected data:', data);
+            } catch (error) {
+                console.error('Error fetching protected data:', error);
+                window.location.href = '/Login.html'; // Redirect in case of error
+            }
+        }
+
+        // Fetch protected data when the page loads (example)
+        document.addEventListener('DOMContentLoaded', fetchProtectedData);
+    </script>
+    
+  </body>
+</html>

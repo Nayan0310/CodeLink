@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeLink | Home</title>
+    <link rel="icon" href="/assets/logo.png">
+    <link rel="stylesheet" href="/styles/index.css">
+     <!-- Prism.js for syntax highlighting -->
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-clike.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-javascript.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-java.min.js"></script>
+
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <img src="/assets/logo.png" alt="Logo">
+                <h1>CodeLink</h1>
+            </div>
+            <div class="nav-links">
+                <a href="/public/Login.html">LogIn</a> 
+                <a href="/public/SignUp.html">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+    <section>
+    <h1>Latest Public Gists</h1>
+    <div id="public-code-list"></div>
+    </section>
+    <footer>
+        <div class="footer">
+          <div class="copy">
+            <img src="/assets/logo.png" alt="Codelink" class="Codelink-icon">
+          </div>
+          <div class="text">&copy; 2024 CodeLink.</div>
+          <a href="info.html"> About</a>
+          <a href="info.html"> Contact us</a>
+        </div> 
+    </footer>
+    <!-- Script to fetch and display the 10 latest public codes -->
+    <script>
+        async function fetchPublicCodes() {
+            const response = await fetch('/api/public-codes');
+            const publicCodes = await response.json();
+            const codeContainer = document.getElementById('public-code-list');
+    
+            publicCodes.forEach(code => {
+                const codeElement = document.createElement('div');
+                codeElement.classList.add('code-container');
+    
+                // Detect language based on file extension
+                const fileExtension = code.filename.split('.').pop();
+                let languageClass = getLanguageClass(fileExtension);
+    
+                // Escape the code content to prevent HTML from being rendered
+                const escapedContent = escapeHtml(code.content.split('\n').slice(0, 10).join('\n'));
+    
+                // Generate the HTML structure for each code
+                codeElement.innerHTML = `
+                    <p class="username">${code.username}</p>
+                    <p class="code-details">${code.filename} | ${code.description}</p>
+                    <a class="view-full-link" href="/fullcode.html?id=${code._id}">View Full Code</a>
+                    <pre><code class="language-${languageClass}">${escapedContent}</code></pre>
+                `;
+                codeContainer.appendChild(codeElement);
+            });
+    
+            // Manually highlight all code blocks with Prism.js
+            Prism.highlightAll();
+        }
+    
+        // Function to detect language based on file extension
+        function getLanguageClass(fileExtension) {
+            const languages = {
+                'js': 'javascript',
+                'py': 'python',
+                'html': 'markup',
+                'css': 'css',
+                'java': 'java',
+                // Add more extensions and corresponding Prism language classes as needed
+            };
+            return languages[fileExtension] || 'plaintext'; // Default to plaintext if unknown
+        }
+    
+        // Function to escape HTML characters
+        function escapeHtml(html) {
+            return html
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+    
+        // Fetch public codes when the document is ready
+        document.addEventListener('DOMContentLoaded', fetchPublicCodes);
+    </script>
+    
+</body>
+</html>

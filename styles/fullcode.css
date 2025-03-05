@@ -1,0 +1,52 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.code-container {
+    margin-bottom: 20px;
+    padding: 15px;
+    width: 98.9%;
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.username {
+    color: blue;
+    font-weight: bold;
+}
+
+.code-details {
+    font-size: 1.1em;
+    margin: 5px 0;
+}
+
+pre {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: monospace;
+    overflow: auto;
+    white-space: pre-wrap;
+}
+
+.shareable-url {
+    margin-bottom: 20px;
+}
+
+.shareable-url input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}

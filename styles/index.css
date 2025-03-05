@@ -1,0 +1,157 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #333;
+    height: 45px;
+    color: white;
+    padding: 10px 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    border-radius: 50%;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.logo h1 {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.nav-links a {
+    margin: 0 30px;
+    padding: 10px 10px;
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 1.1em;
+}
+
+.nav-links a:hover {
+    color: #dddddd;
+    text-decoration: none;
+
+}
+
+section{
+    margin-top: 80px;
+    display: flex;
+    min-height: 80vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#public-code-list{
+    width: 80%;
+}
+
+.code-container {
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.username {
+    color: blue;
+    font-weight: bold;
+    margin: 0;
+}
+
+.code-details {
+    font-size: 1.1em;
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+ .code-preview {
+    background-color: black;
+    color: white;
+    white-space: pre-line; 
+    padding: 0 10px 10px 20px;
+    max-height: 310px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    font-family: monospace;
+    overflow: auto;
+    
+} 
+
+.view-full-link {
+    text-decoration: none;
+    color: #007BFF;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.view-full-link:hover {
+    text-decoration: underline;
+}
+
+.footer {
+    /* background-color: var(--secondary-color); */
+    padding: 20px;
+    font-size: 15px;
+    color: var(--text-color);
+    /* position: fixed; */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.footer a {
+    font-weight: bold;
+    color: var(--text-color);
+    text-decoration: none;
+    margin: 0 9px;
+}
+
+.copy img {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    padding: 3px;
+    margin: 3px;
+}
+
+.copy span {
+    text-align: justify;
+
+
+};

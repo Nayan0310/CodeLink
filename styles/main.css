@@ -1,0 +1,139 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #70777F;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #333;
+    height: 45px;
+    color: white;
+    padding: 10px 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    border-radius: 50%;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.logo h1 {
+    font-size: 1.5em;
+    margin: 0;
+}
+.nav-links{
+    display: flex;
+    flex-direction: row;
+}
+
+.nav-links a:not(:last-child) {
+    margin: 0 30px;
+    padding: 10px 10px;
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 1.1em;
+}
+
+.nav-links a:hover {
+    color: #dddddd;
+    text-decoration: none;
+
+}
+.profile a img{
+    margin-left: 20px;
+    height: 40px;
+    border-radius: 50%;
+}
+section h1{
+    color: black;
+}
+.container {
+    width: 50%;
+    margin: 85px auto 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #D9DCE1;
+}
+input, textarea {
+    width: 96%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+textarea{
+    resize: none;
+    scroll-behavior: smooth;
+}
+button {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    font-weight: 700;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #218838;
+}
+
+.footer {
+    /* background-color: var(--secondary-color); */
+    padding: 20px;
+    font-size: 15px;
+    color: white;
+    /* position: fixed; */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.footer a {
+    font-weight: bold;
+    color: var(--text-color);
+    text-decoration: none;
+    margin: 0 9px;
+}
+
+.copy img {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    padding: 3px;
+    margin: 3px;
+}
+
+.copy span {
+    text-align: justify;
+
+
+};

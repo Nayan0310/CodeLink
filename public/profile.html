@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeLink | Profile</title>
+    <link rel="icon" href="/assets/logo.png">
+    <link rel="stylesheet" href="/styles/profile.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="profile-image">
+            <img src="/assets/profile.jpg" alt="Profile Image" id="profileImage">
+        </div>
+        <h2>Your Profile</h2>
+        <p>Username</p>
+        <div class="username" id="username">Loading...</div>
+        <a class="change-Password" href="/public/changePassword.html">Change Password</a>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script src="/auth.js"></script> <!-- External JavaScript file for authentication logic -->
+    <script>
+        // Function to handle API requests and redirect on 401 Unauthorized
+        async function fetchProtectedData() {
+            try {
+                const response = await fetch('/api/protected-data'); // Example API request
+
+                if (response.status === 401) {
+                    // If the user is unauthorized, redirect to the login page
+                    window.location.href = '/Login.html';
+                }
+
+                const data = await response.json();
+                console.log('Protected data:', data);
+            } catch (error) {
+                console.error('Error fetching protected data:', error);
+                window.location.href = '/Login.html'; // Redirect in case of error
+            }
+        }
+
+        // Fetch protected data when the page loads (example)
+        document.addEventListener('DOMContentLoaded', fetchProtectedData);
+    </script>
+    
+    
+    
+    
+</body>
+</html>
